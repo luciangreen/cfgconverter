@@ -41,6 +41,13 @@ test(extract_sequences_list) :-
     extract_sequences(IR, Seqs),
     Seqs = [sequence(body, [intro, main, conclusion], [], src)].
 
+test(extract_sequence_from_has) :-
+    idea_from_sentences(sonata_test,
+        ['A sonata has an exposition, development and recapitulation.'], IR),
+    extract_relations(sonata_test, IR, Rels),
+    member(sequence(_, Members, _, _), Rels),
+    Members = [exposition, development, recapitulation].
+
 tokenise_rel(Text, Tokens) :-
     atom_string(Text, Str),
     downcase_atom(Text, Lower),
