@@ -29,7 +29,7 @@ ideacfg :-
 repl_loop(State) :-
     write('IdeaCFG> '),
     flush_output,
-    (   catch(read_term(Command, [variable_names(_)]),
+    (   catch(read_term(Command, [variable_names(_), module(ideacfg_repl)]),
               _Error,
               Command = error)
     ->  (   Command = end_of_file
