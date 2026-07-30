@@ -14,6 +14,7 @@
 :- use_module(library(readutil)).
 
 :- op(900, fx, new).
+:- op(900, fx, add).
 
 %% ideacfg/0 is det.
 %  Starts the IdeaCFG interactive REPL.
@@ -29,7 +30,7 @@ ideacfg :-
 repl_loop(State) :-
     write('IdeaCFG> '),
     flush_output,
-    (   catch(read_term(Command, [variable_names(_), module(ideacfg_repl)]),
+    (   catch(read_term(Command, [variable_names(_), module(ideacfg_repl), double_quotes(atom)]),
               _Error,
               Command = error)
     ->  (   Command = end_of_file
