@@ -1,0 +1,2283 @@
+Below is an implementation-ready PROGRAM_REQUIREMENTS.md specification.
+
+Academic Idea to CFG Generator
+
+GitHub Copilot Prolog Agent Program Requirements
+
+1. Project name
+
+Working name:
+
+IdeaCFG
+
+Alternative command name:
+
+ideacfg
+
+IdeaCFG is a SWI-Prolog system that converts descriptions of human arts, sciences, humanities, professional disciplines, algorithms and other academic ideas into executable context-free grammars.
+
+Before or during grammar generation, the system must identify mathematical, logical and directly computable operations. These operations must be removed from the ordinary CFG structure and compiled into deterministic Prolog predicates wherever direct computation is clearer, more accurate or more efficient than grammar enumeration.
+
+The resulting system combines:
+
+natural-language or structured idea
+        ↓
+concept and operation extraction
+        ↓
+direct Prolog computation layer
+        +
+CFG or DCG symbolic structure layer
+        ↓
+executable Prolog program
+        ↓
+generation, parsing, explanation and testing
+
+The first release must target SWI-Prolog.
+
+⸻
+
+2. Mission
+
+The program must convert an academic idea into two coordinated components:
+
+1. A CFG or Prolog DCG representing symbolic, categorical, compositional, linguistic, artistic or conceptual possibilities.
+2. A deterministic Prolog computation layer representing mathematical operations, comparisons, measurements, transformations, constraints and calculations.
+
+The system must support ideas from fields including, but not limited to:
+
+* mathematics;
+* computing;
+* physics;
+* chemistry;
+* biology;
+* medicine as an academic domain;
+* economics;
+* business;
+* law;
+* philosophy;
+* linguistics;
+* literature;
+* music;
+* visual art;
+* architecture;
+* history;
+* geography;
+* education;
+* psychology;
+* sociology;
+* engineering;
+* design;
+* film;
+* theatre;
+* logic;
+* statistics;
+* data science;
+* interdisciplinary research.
+
+The system must not claim that every human idea is inherently context-free. Instead, it must approximate complex ideas using explicit, inspectable grammar tricks and move non-context-free or computational behaviour into Prolog predicates, bounded structures, feature arguments, constraints or post-processing stages.
+
+⸻
+
+3. Core design principle
+
+The system must apply the following rule:
+
+Represent choices and composition with grammar.
+Represent calculation and verification with Prolog.
+
+Examples:
+
+Musical phrase structure        → CFG/DCG
+Transposition by seven semitones → Prolog arithmetic
+Chemical reaction pattern       → CFG/DCG
+Molar-mass calculation          → Prolog arithmetic
+Essay structure                 → CFG/DCG
+Word-count calculation          → Prolog arithmetic
+Economic scenario structure     → CFG/DCG
+Compound-interest calculation   → Prolog arithmetic
+Geometric construction steps    → CFG/DCG
+Distance and area calculations  → Prolog arithmetic
+Narrative possibilities         → CFG/DCG
+Timeline consistency checks     → Prolog constraints
+
+The program must preserve a visible boundary between generated grammar rules and directly executed operations.
+
+⸻
+
+4. Primary use cases
+
+The program must support at least the following use cases.
+
+4.1 Generate a CFG from a plain-language idea
+
+Example input:
+
+A sonata contains an exposition, development and recapitulation.
+The exposition introduces a first theme and a contrasting second theme.
+Themes may be varied by inversion, augmentation or transposition.
+Transposition changes every pitch by an integer number of semitones.
+
+Expected output:
+
+* grammar rules for sonata structure;
+* grammar rules for theme selection and variation;
+* a direct Prolog predicate for transposition;
+* documentation explaining which parts became grammar and which became computation.
+
+4.2 Generate a CFG from structured facts
+
+Example input:
+
+concept(photosynthesis).
+stage(light_dependent_reactions).
+stage(calvin_cycle).
+precedes(light_dependent_reactions, calvin_cycle).
+requires(calvin_cycle, carbon_dioxide).
+operation(glucose_energy, multiplication).
+
+The system must generate an executable DCG and direct predicates where applicable.
+
+4.3 Parse an example using a generated grammar
+
+Example:
+
+?- idea_parse(photosynthesis, Tokens, Tree).
+
+4.4 Generate valid examples
+
+Example:
+
+?- idea_generate(sonata, Output).
+
+4.5 Compute extracted operations
+
+Example:
+
+?- idea_compute(compound_interest,
+                [principal-1000, rate-0.05, periods-10],
+                Result).
+
+4.6 Explain the conversion
+
+Example:
+
+?- idea_explain(sonata, Explanation).
+
+The explanation must identify:
+
+* source statements;
+* concepts;
+* relationships;
+* extracted operations;
+* grammar productions;
+* bounded approximations;
+* assumptions;
+* unresolved ambiguities.
+
+4.7 Export generated Prolog
+
+Example:
+
+?- idea_export(sonata, 'generated/sonata_cfg.pl').
+
+4.8 Generate from input/output examples
+
+The system should optionally infer a grammar skeleton from examples:
+
+example_input_output(
+    harmonic_progression,
+    [tonic, predominant, dominant],
+    valid_progression
+).
+
+This functionality may use Spec-to-Algorithm-style synthesis where useful.
+
+⸻
+
+5. Supported input forms
+
+The first release must accept the following input forms.
+
+5.1 Plain text
+
+idea_from_text(+IdeaName, +Text, -Model).
+
+5.2 List of sentences
+
+idea_from_sentences(+IdeaName, +Sentences, -Model).
+
+5.3 Structured Prolog terms
+
+idea_from_terms(+IdeaName, +Terms, -Model).
+
+5.4 Hybrid input
+
+The user may provide prose plus explicit declarations:
+
+idea_from_hybrid(
+    music_theory,
+    Text,
+    [
+        operation(transpose, direct),
+        maximum_recursion_depth(4),
+        dialect(classical_harmony)
+    ],
+    Model
+).
+
+5.5 Existing Prolog knowledge bases
+
+The system should accept selected facts and rules from an existing module and construct a grammar-oriented representation from them.
+
+It must not silently alter the original module.
+
+⸻
+
+6. Output forms
+
+The system must produce one or more of the following.
+
+6.1 Prolog DCG
+
+Preferred executable representation:
+
+sonata(Tree) -->
+    exposition(Exposition),
+    development(Development),
+    recapitulation(Recapitulation),
+    {
+        Tree = sonata(
+            Exposition,
+            Development,
+            Recapitulation
+        )
+    }.
+
+6.2 Plain CFG notation
+
+Example:
+
+SONATA → EXPOSITION DEVELOPMENT RECAPITULATION
+EXPOSITION → FIRST_THEME SECOND_THEME
+VARIATION → INVERSION | AUGMENTATION | TRANSPOSITION
+
+6.3 Direct Prolog predicates
+
+Example:
+
+transpose_pitch(Pitch, Semitones, Result) :-
+    must_be(integer, Pitch),
+    must_be(integer, Semitones),
+    Result is Pitch + Semitones.
+
+6.4 Intermediate model
+
+The system must maintain an internal representation that separates:
+
+* concepts;
+* entities;
+* categories;
+* sequences;
+* alternatives;
+* optional elements;
+* repetitions;
+* recursion;
+* features;
+* dependencies;
+* operations;
+* constraints;
+* values;
+* units;
+* source locations;
+* assumptions.
+
+6.5 Conversion report
+
+The conversion report must be available as:
+
+* Prolog terms;
+* human-readable text;
+* Markdown;
+* optionally JSON.
+
+⸻
+
+7. Processing pipeline
+
+The required pipeline is:
+
+1. Read input
+2. Segment source statements
+3. Detect domain and terminology
+4. Extract concepts and relations
+5. Identify mathematical and directly computable operations
+6. Remove or isolate direct operations from grammar candidates
+7. Construct a typed intermediate idea model
+8. Select CFG conversion tricks
+9. Generate grammar rules
+10. Generate direct Prolog predicates
+11. Insert interfaces between grammar and computation
+12. Detect left recursion, cycles and uncontrolled expansion
+13. Simplify and factor grammar
+14. Validate generated code
+15. Run generated tests
+16. Emit Prolog, CFG notation and explanation
+
+Stages 5 and 6 may run before conceptual grammar construction or as a secondary analysis pass.
+
+The user must be able to select:
+
+operation_extraction(prior).
+operation_extraction(secondary).
+operation_extraction(iterative).
+
+Default:
+
+operation_extraction(iterative).
+
+In iterative mode, operations are first extracted before grammar construction and then checked again after the initial grammar has been generated.
+
+⸻
+
+8. Mathematical-operation extraction
+
+8.1 Purpose
+
+Mathematical and directly computable operations must not be inefficiently represented as large lists of grammar alternatives when Prolog can compute them directly.
+
+For example, the system must prefer:
+
+Area is Width * Height
+
+over a grammar enumerating possible widths, heights and areas.
+
+8.2 Operations to detect
+
+The extractor must recognise at least:
+
+* addition;
+* subtraction;
+* multiplication;
+* division;
+* integer division;
+* remainder;
+* exponentiation;
+* roots;
+* logarithms;
+* percentages;
+* ratios;
+* averages;
+* weighted averages;
+* sums;
+* products;
+* counting;
+* minimum;
+* maximum;
+* sorting;
+* ranking;
+* set union;
+* set intersection;
+* set difference;
+* equality;
+* inequality;
+* numerical comparison;
+* range checks;
+* distance;
+* duration;
+* rate;
+* probability calculations;
+* combinatorial calculations;
+* coordinate transformations;
+* unit conversions;
+* date and time calculations;
+* list length;
+* indexing;
+* accumulation;
+* recurrence relations;
+* matrix operations where supported;
+* Boolean operations;
+* deterministic logical implication;
+* table lookup;
+* formula substitution.
+
+8.3 Linguistic indicators
+
+The system must detect phrases such as:
+
+add
+subtract
+multiply
+divide
+increase by
+decrease by
+twice
+half
+percentage of
+average
+total
+difference
+ratio
+per
+for each
+equal to
+greater than
+less than
+at least
+at most
+between
+calculate
+compute
+measure
+convert
+transform
+shift by
+rotate by
+count
+sum
+rank
+sort
+
+8.4 Symbolic indicators
+
+The system must recognise expressions such as:
+
+x + y
+a * b
+r^2
+P = VI
+E = mc^2
+mean(values)
+sum(values)
+distance(A, B)
+
+8.5 Operation classification
+
+Each extracted operation must be classified as one of:
+
+operation_class(arithmetic).
+operation_class(comparison).
+operation_class(aggregation).
+operation_class(transformation).
+operation_class(constraint).
+operation_class(lookup).
+operation_class(logical).
+operation_class(probabilistic).
+operation_class(symbolic).
+operation_class(external).
+operation_class(unknown).
+
+8.6 Directness decision
+
+The system must determine whether an operation should be:
+
+execution_mode(direct_prolog).
+execution_mode(cfg_enumeration).
+execution_mode(hybrid).
+execution_mode(deferred).
+execution_mode(unsupported).
+
+Default rule:
+
+Use direct Prolog when a deterministic operation can compute the result.
+Use CFG alternatives when the operation represents qualitative choices.
+Use hybrid mode when grammar selects an operation and Prolog performs it.
+
+8.7 Hybrid operation example
+
+Grammar:
+
+transformation(transpose(Semitones)) -->
+    [transpose, by, Semitones],
+    { integer(Semitones) }.
+
+Computation:
+
+apply_transformation(
+    transpose(Semitones),
+    InputPitches,
+    OutputPitches
+) :-
+    maplist(add_semitones(Semitones), InputPitches, OutputPitches).
+
+8.8 Operation dependencies
+
+The system must build a dependency graph:
+
+operation_dependency(Output, Input).
+
+It must topologically order deterministic calculations when possible.
+
+Example:
+
+radius → area
+radius → circumference
+area + height → volume
+
+8.9 Avoid unsafe evaluation
+
+The generator must not construct arbitrary source strings and execute them using unrestricted call/1, consult/1 or term_string/2.
+
+Generated operations must be assembled from an allowlisted internal operation model.
+
+Unsafe or unknown formulas must be emitted as unresolved obligations rather than executed.
+
+⸻
+
+9. Idea intermediate representation
+
+The system must define a documented intermediate representation.
+
+Minimum required forms:
+
+idea(Name, Metadata, Elements).
+concept(Id, Label, Type, Properties, Source).
+relation(Type, From, To, Properties, Source).
+sequence(Id, Members, Properties, Source).
+alternative(Id, Members, Properties, Source).
+optional(Id, Member, Properties, Source).
+repetition(Id, Member, Minimum, Maximum, Properties, Source).
+operation(Id, Class, Inputs, Output, Expression, Properties, Source).
+constraint(Id, Type, Arguments, Properties, Source).
+feature(Entity, Name, Value, Source).
+example(Id, Input, Output, Properties, Source).
+ambiguity(Id, Alternatives, Source).
+assumption(Id, Statement, Reason, Source).
+
+The IR must be serialisable as Prolog terms.
+
+Each generated rule must retain links to the source statements from which it was derived.
+
+⸻
+
+10. General CFG conversion tricks
+
+The system must implement a library of explicit CFG conversion tricks.
+
+Each trick must:
+
+* have a unique name;
+* specify when it applies;
+* specify its transformation;
+* report its assumptions;
+* generate tests;
+* be independently enabled or disabled.
+
+10.1 Category abstraction
+
+Convert related items into a category.
+
+Input:
+
+A painting can use oil, acrylic or watercolour.
+
+Output:
+
+MEDIUM → OIL | ACRYLIC | WATERCOLOUR
+
+10.2 Sequence extraction
+
+Input:
+
+An experiment contains a hypothesis, method, results and conclusion.
+
+Output:
+
+EXPERIMENT → HYPOTHESIS METHOD RESULTS CONCLUSION
+
+10.3 Alternative extraction
+
+Input:
+
+A proof may use induction, contradiction or construction.
+
+Output:
+
+PROOF_METHOD → INDUCTION | CONTRADICTION | CONSTRUCTION
+
+10.4 Optionality
+
+Input:
+
+A report may include an appendix.
+
+Output:
+
+REPORT → BODY OPTIONAL_APPENDIX
+OPTIONAL_APPENDIX → APPENDIX | ε
+
+10.5 Bounded repetition
+
+Input:
+
+A paragraph contains one or more sentences.
+
+Output:
+
+PARAGRAPH → SENTENCE MORE_SENTENCES
+MORE_SENTENCES → SENTENCE MORE_SENTENCES | ε
+
+The generator must support explicit maximum bounds where uncontrolled generation would be unsafe.
+
+10.6 Recursive hierarchy
+
+Input:
+
+A section may contain subsections.
+
+Output:
+
+SECTION → CONTENT SUBSECTIONS
+SUBSECTIONS → SECTION SUBSECTIONS | ε
+
+Recursive rules must receive termination and depth analysis.
+
+10.7 Feature splitting
+
+Finite dependencies must be compiled into specialised nonterminals or DCG arguments.
+
+Example:
+
+statement(Domain, Level) -->
+    subject(Domain, Level),
+    predicate(Domain, Level).
+
+This trick handles finite agreement, domain, tense, role, stage, genre, scale or other categorical information.
+
+10.8 State threading
+
+Processes with changing state must use DCG arguments or explicit state predicates.
+
+process(State0, State) -->
+    step(State0, State1),
+    process(State1, State).
+
+State must not be hidden inside unsafe global predicates.
+
+10.9 Construction-specific grammar
+
+Domain-specific structures may receive dedicated rules.
+
+Examples:
+
+SONNET
+LAB_REPORT
+LEGAL_ARGUMENT
+CHEMICAL_REACTION
+BUSINESS_CASE
+HISTORICAL_TIMELINE
+ALGORITHMIC_PROOF
+MUSICAL_CADENCE
+
+10.10 Lexical equivalence classes
+
+Variant terms must be mapped to one concept.
+
+lexical_form(Concept, Domain, Surface).
+
+Examples:
+
+plus
+added to
+increased by
+the sum of
+
+may map to the shared operation addition.
+
+10.11 Synonym normalisation
+
+Synonyms should be normalised before grammar generation but preserved as optional surface forms where requested.
+
+10.12 Template expansion
+
+Repeated patterns may be generated from templates.
+
+template(
+    causal_statement,
+    [cause, connector, effect]
+).
+
+10.13 Common-prefix factoring
+
+Input:
+
+ARGUMENT → CLAIM EVIDENCE
+ARGUMENT → CLAIM EXAMPLE
+ARGUMENT → CLAIM COUNTERARGUMENT
+
+Output:
+
+ARGUMENT → CLAIM SUPPORT
+SUPPORT → EVIDENCE | EXAMPLE | COUNTERARGUMENT
+
+10.14 Common-suffix factoring
+
+Shared endings must be factored where this improves readability or parsing.
+
+10.15 Left-recursion elimination
+
+Input:
+
+EXPR → EXPR "+" TERM | TERM
+
+Output:
+
+EXPR → TERM EXPR_TAIL
+EXPR_TAIL → "+" TERM EXPR_TAIL | ε
+
+Arithmetic itself should then be computed by direct Prolog evaluation rather than merely recognised.
+
+10.16 Precedence-layer construction
+
+Expressions must be transformed into levels:
+
+EXPRESSION
+TERM
+FACTOR
+PRIMARY
+
+The grammar parses structure; Prolog computes the result.
+
+10.17 Bounded cross-dependency approximation
+
+Dependencies that are not naturally context-free must be represented through one of:
+
+* finite feature arguments;
+* bounded grammar expansion;
+* indexed categories;
+* state threading;
+* post-parse validation;
+* direct Prolog constraints;
+* explicit declaration that the structure is an approximation.
+
+The system must not silently describe a non-context-free dependency as exactly context-free.
+
+10.18 Semantic filtering
+
+A broad CFG may generate candidates that are filtered by deterministic Prolog checks.
+
+valid_candidate(Tree) :-
+    domain_constraints(Tree).
+
+The report must distinguish grammar acceptance from semantic validation.
+
+10.19 Generate broadly, validate narrowly
+
+For difficult domains, the system may:
+
+1. use a CFG to generate structural candidates;
+2. apply Prolog predicates to eliminate invalid candidates.
+
+This trick must be configurable because it may generate large search spaces.
+
+10.20 Parse narrowly, interpret broadly
+
+The system may use a small normalised grammar and map varied surface inputs into canonical concepts during preprocessing.
+
+10.21 Milestoning
+
+Large academic processes should be broken into milestone nonterminals.
+
+Example:
+
+RESEARCH_PROJECT
+  → QUESTION_STAGE
+    LITERATURE_STAGE
+    METHOD_STAGE
+    ANALYSIS_STAGE
+    REPORTING_STAGE
+
+Milestoning should reduce grammar complexity and improve explanation.
+
+10.22 Domain partitioning
+
+Large ideas must be divided into domains or subdomains before grammar synthesis.
+
+domain(physics, mechanics).
+domain(physics, thermodynamics).
+domain(music, harmony).
+domain(music, form).
+
+Only relevant domain grammar modules should be loaded for a query.
+
+10.23 Hotlist rules
+
+The system may construct a small set of highly relevant productions for a requested task instead of executing the entire domain grammar.
+
+10.24 Decision-tree grammar selection
+
+Where context determines a small set of valid productions, the system may compile conditions into deterministic decision predicates.
+
+select_rule(Context, RuleId).
+
+The selected rule may then invoke the corresponding DCG.
+
+10.25 Table-driven grammar
+
+Repeated factual relationships may be stored as tables rather than separate handwritten rules.
+
+production(Category, Expansion).
+
+An interpreter or compiler may convert the table into executable DCG clauses.
+
+10.26 Meta-rule instantiation
+
+Reusable academic patterns should be represented as meta-rules.
+
+Examples:
+
+classification
+comparison
+cause and effect
+problem and solution
+hypothesis and test
+claim and evidence
+part and whole
+process and stage
+input and transformation and output
+
+10.27 Example-guided restriction
+
+Examples supplied by the user may restrict generated rules and remove unsupported alternatives.
+
+10.28 Negative constraints
+
+Statements such as:
+
+A conclusion must not introduce new evidence.
+
+must become Prolog constraints rather than awkward grammar enumeration where appropriate.
+
+10.29 Unit-aware calculation
+
+Values with units must be represented explicitly.
+
+quantity(Value, Unit).
+
+Unit conversion must occur in direct Prolog predicates.
+
+The program must reject incompatible operations such as adding metres to seconds unless an explicit domain rule defines the operation.
+
+10.30 Probabilistic concepts
+
+A probability distribution may be described by grammar, but probability calculations must be executed directly.
+
+The initial system must not pretend that weighted CFG generation is an ordinary CFG unless weighted mode is explicitly selected.
+
+⸻
+
+11. Domain-general idea patterns
+
+The generator must recognise common academic patterns.
+
+11.1 Classification
+
+CATEGORY → SUBCATEGORY_1 | SUBCATEGORY_2
+
+11.2 Composition
+
+WHOLE → PART_1 PART_2 PART_3
+
+11.3 Process
+
+PROCESS → STAGE_1 STAGE_2 STAGE_3
+
+11.4 Causation
+
+CAUSAL_MODEL → CAUSE MECHANISM EFFECT
+
+11.5 Argument
+
+ARGUMENT → CLAIM SUPPORT QUALIFICATION
+
+11.6 Comparison
+
+COMPARISON → SUBJECT_A DIMENSION SUBJECT_B CONCLUSION
+
+11.7 Experiment
+
+EXPERIMENT → HYPOTHESIS METHOD OBSERVATION ANALYSIS CONCLUSION
+
+11.8 Transformation
+
+TRANSFORMATION → INPUT OPERATOR OUTPUT
+
+The operator may be a direct Prolog predicate.
+
+11.9 Feedback loop
+
+FEEDBACK_SYSTEM → STATE ACTION OBSERVATION UPDATE
+
+State changes must be handled through explicit state arguments.
+
+11.10 Creative composition
+
+ARTWORK → THEME FORM MATERIAL TECHNIQUE DEVELOPMENT RESOLUTION
+
+11.11 Historical explanation
+
+HISTORICAL_ACCOUNT
+    → CONTEXT
+      ACTORS
+      EVENTS
+      CONSEQUENCES
+      INTERPRETATION
+
+11.12 Theorem or proof
+
+PROOF → PREMISES METHOD STEPS CONCLUSION
+
+Logical validity checks should be separate Prolog predicates.
+
+⸻
+
+12. Generated module architecture
+
+For each idea, generate a module such as:
+
+:- module(
+    idea_sonata,
+    [
+        idea_parse/2,
+        idea_parse/3,
+        idea_generate/1,
+        idea_generate/2,
+        idea_compute/3,
+        idea_validate/2,
+        idea_explain/1,
+        idea_rule/2
+    ]
+).
+
+Suggested generated files:
+
+generated/
+  sonata/
+    sonata_cfg.pl
+    sonata_operations.pl
+    sonata_constraints.pl
+    sonata_lexicon.pl
+    sonata_tests.pl
+    sonata_report.md
+    sonata_model.pl
+
+A compact single-file mode must also be supported.
+
+⸻
+
+13. Required public API
+
+13.1 Conversion
+
+idea_to_cfg(+IdeaName, +Input, -Result).
+idea_to_cfg(+IdeaName, +Input, +Options, -Result).
+
+13.2 Parsing
+
+idea_parse(+IdeaName, +Tokens, -Tree).
+idea_parse(+IdeaName, +Tokens, +Options, -Tree).
+
+13.3 Generation
+
+idea_generate(+IdeaName, -Tokens).
+idea_generate(+IdeaName, +Options, -Tokens).
+
+13.4 Direct computation
+
+idea_compute(+IdeaName, +Operation, +Inputs, -Output).
+
+Alternative supported convenience form:
+
+idea_compute(+IdeaName, +Bindings, -Results).
+
+13.5 Validation
+
+idea_validate(+IdeaName, +Tree, -Report).
+
+13.6 Explanation
+
+idea_explain(+IdeaName, -Explanation).
+idea_explain_rule(+IdeaName, +RuleId, -Explanation).
+idea_explain_operation(+IdeaName, +OperationId, -Explanation).
+
+13.7 Export
+
+idea_export(+IdeaName, +Path).
+idea_export(+IdeaName, +Format, +Path).
+
+13.8 Loading and unloading
+
+idea_load(+Path, -IdeaName).
+idea_unload(+IdeaName).
+
+13.9 Testing
+
+idea_test(+IdeaName, -Report).
+
+⸻
+
+14. Options
+
+Minimum supported options:
+
+dialect(Name).
+domain(Name).
+output(cfg).
+output(dcg).
+output(both).
+operation_extraction(prior).
+operation_extraction(secondary).
+operation_extraction(iterative).
+maximum_depth(Integer).
+maximum_generation_length(Integer).
+maximum_alternatives(Integer).
+factor_common_prefixes(Boolean).
+factor_common_suffixes(Boolean).
+eliminate_left_recursion(Boolean).
+semantic_validation(Boolean).
+normalise_synonyms(Boolean).
+preserve_source_words(Boolean).
+strict_operations(Boolean).
+allow_approximations(Boolean).
+emit_explanation(Boolean).
+emit_tests(Boolean).
+compact_output(Boolean).
+
+Defaults must prioritise:
+
+* simplicity;
+* deterministic behaviour;
+* transparent output;
+* safe termination;
+* readable generated code.
+
+⸻
+
+15. REPL requirements
+
+Provide an interactive SWI-Prolog REPL.
+
+Example:
+
+?- ideacfg.
+IdeaCFG>
+IdeaCFG> new sonata.
+IdeaCFG> add "A sonata has an exposition, development and recapitulation."
+IdeaCFG> add "A theme may be transposed by an integer number of semitones."
+IdeaCFG> analyse.
+IdeaCFG> show concepts.
+IdeaCFG> show operations.
+IdeaCFG> show cfg.
+IdeaCFG> show prolog.
+IdeaCFG> generate 5.
+IdeaCFG> test.
+IdeaCFG> save generated/sonata.
+
+Required commands:
+
+new IDEA
+add TEXT
+load FILE
+analyse
+extract operations
+build cfg
+optimise
+show source
+show concepts
+show relations
+show operations
+show constraints
+show cfg
+show dcg
+show prolog
+show assumptions
+show ambiguities
+show warnings
+parse TEXT
+generate
+generate N
+compute OPERATION ARGUMENTS
+validate EXAMPLE
+test
+export FILE
+save DIRECTORY
+reset
+help
+quit
+
+The REPL must support commands to:
+
+* output generated Prolog;
+* run generated Prolog;
+* output and run generated Prolog;
+* show only the grammar;
+* show only extracted operations.
+
+⸻
+
+16. Command-line interface
+
+Required examples:
+
+swipl -q -s ideacfg.pl -- \
+  convert \
+  --name sonata \
+  --input examples/sonata.txt \
+  --output generated/sonata
+swipl -q -s ideacfg.pl -- \
+  show-operations \
+  --input examples/economics.txt
+swipl -q -s ideacfg.pl -- \
+  generate \
+  --idea generated/sonata \
+  --count 10
+swipl -q -s ideacfg.pl -- \
+  parse \
+  --idea generated/sonata \
+  --text "exposition development recapitulation"
+swipl -q -s ideacfg.pl -- \
+  test \
+  --idea generated/sonata
+
+Exit codes must distinguish:
+
+* success;
+* invalid input;
+* unresolved ambiguity;
+* unsupported operation;
+* unsafe generated code;
+* test failure;
+* resource limit;
+* internal error.
+
+⸻
+
+17. Ambiguity handling
+
+The system must preserve ambiguity rather than silently selecting an interpretation.
+
+Example:
+
+A researcher observes a student with a telescope.
+
+Possible structures must be reported explicitly.
+
+Representation:
+
+ambiguity(
+    telescope_attachment,
+    [
+        observes_with_telescope,
+        student_has_telescope
+    ],
+    Source
+).
+
+Modes:
+
+ambiguity_mode(report).
+ambiguity_mode(generate_all).
+ambiguity_mode(prefer_simple).
+ambiguity_mode(require_resolution).
+
+Default:
+
+ambiguity_mode(report).
+
+When generating code automatically, unresolved interpretations may be represented as grammar alternatives if safe.
+
+⸻
+
+18. Validation requirements
+
+The generated system must perform the following checks.
+
+18.1 Grammar validation
+
+* undefined nonterminals;
+* unreachable nonterminals;
+* unproductive nonterminals;
+* direct left recursion;
+* indirect left recursion;
+* epsilon cycles;
+* duplicate productions;
+* uncontrolled recursion;
+* excessive branching;
+* grammar-symbol name collisions;
+* terminals accidentally treated as variables;
+* nonterminating generation risk.
+
+18.2 Operation validation
+
+* undefined inputs;
+* undefined output;
+* cyclic dependencies;
+* division by zero risk;
+* incompatible units;
+* unsafe arithmetic;
+* unsupported symbolic expression;
+* nondeterministic direct predicate;
+* missing type checks;
+* invalid date or time calculations;
+* overflow or resource warnings where relevant.
+
+18.3 Interface validation
+
+The system must ensure that values passed between grammar and computation layers have compatible representations.
+
+18.4 Generated Prolog validation
+
+Generated code must:
+
+* load without syntax errors;
+* avoid singleton-variable warnings where possible;
+* avoid accidental choicepoints in declared deterministic predicates;
+* avoid unrestricted meta-calls;
+* avoid dynamic code execution;
+* use qualified module calls;
+* expose only documented public predicates.
+
+⸻
+
+19. Determinism
+
+Direct mathematical and operational predicates should be deterministic or semideterministic.
+
+Declarations should be represented internally:
+
+determinism(Operation, det).
+determinism(Validator, semidet).
+determinism(Parser, nondet).
+determinism(Generator, nondet).
+
+The generated test suite must check deterministic predicates for unintended residual choicepoints.
+
+Grammar generation and parsing may be nondeterministic because alternatives are a core feature of CFGs.
+
+The report must distinguish useful grammar nondeterminism from accidental computational nondeterminism.
+
+⸻
+
+20. Resource control
+
+The system must protect against grammar explosion.
+
+Required limits:
+
+maximum_rules(5000).
+maximum_alternatives_per_rule(100).
+maximum_generation_depth(20).
+maximum_generated_tokens(500).
+maximum_operation_dependencies(1000).
+maximum_examples(10000).
+
+These values must be configurable.
+
+Before expanding a grammar, estimate:
+
+* number of rules;
+* branching factor;
+* likely generation depth;
+* possible number of generated structures;
+* recursion risk;
+* memory requirements.
+
+When limits are exceeded, the system should:
+
+1. partition the domain;
+2. create milestones;
+3. factor common productions;
+4. replace enumeration with direct computation;
+5. add bounded recursion;
+6. ask for or record assumptions;
+7. emit a warning or controlled error.
+
+⸻
+
+21. Optimisation requirements
+
+The optimiser must support:
+
+* duplicate rule removal;
+* unreachable rule removal;
+* unproductive rule removal;
+* common-prefix factoring;
+* common-suffix factoring;
+* lexical-table extraction;
+* category merging when semantically safe;
+* left-recursion elimination;
+* bounded-recursion insertion;
+* deterministic operation extraction;
+* repeated-condition memoisation;
+* indexing operation predicates;
+* domain partitioning;
+* hotlist grammar extraction;
+* rule ordering for common cases;
+* optional tabled parsing for recursive grammars;
+* simplification of single-production categories.
+
+Optimisation must not silently change the accepted language unless the change is documented as an approximation.
+
+An optional transformation trace must show:
+
+source statement
+→ extracted model
+→ initial production
+→ applied trick
+→ optimised production
+→ emitted Prolog clause
+
+⸻
+
+22. Mathematical expression grammar
+
+The project must include a reusable expression grammar.
+
+Example structure:
+
+expression(AST) -->
+    term(Term),
+    expression_tail(Term, AST).
+term(AST) -->
+    factor(Factor),
+    term_tail(Factor, AST).
+factor(number(Number)) -->
+    number_token(Number).
+factor(variable(Name)) -->
+    variable_token(Name).
+factor(AST) -->
+    ['('],
+    expression(AST),
+    [')'].
+
+The grammar must produce an AST.
+
+A separate evaluator must compute it:
+
+evaluate(number(Number), _, Number).
+evaluate(variable(Name), Environment, Value) :-
+    memberchk(Name-Value, Environment).
+evaluate(add(A, B), Environment, Result) :-
+    evaluate(A, Environment, AValue),
+    evaluate(B, Environment, BValue),
+    Result is AValue + BValue.
+
+Do not mix parsing and unrestricted evaluation.
+
+The evaluator must use an allowlist of supported operators.
+
+⸻
+
+23. Domain examples required in the repository
+
+The repository must contain examples from at least ten substantially different domains.
+
+23.1 Mathematics
+
+Idea:
+
+A quadratic expression contains coefficients and a variable.
+The discriminant is b squared minus four times a times c.
+
+Expected:
+
+* CFG for expression structure;
+* direct discriminant calculation;
+* optional direct root calculation;
+* type and zero-coefficient checks.
+
+23.2 Physics
+
+Idea:
+
+A motion problem contains initial velocity, acceleration and time.
+Final velocity equals initial velocity plus acceleration multiplied by time.
+
+Expected:
+
+* grammar for problem structure;
+* direct computation of final velocity;
+* unit checks.
+
+23.3 Chemistry
+
+Idea:
+
+A molecule consists of elements with integer atom counts.
+Molar mass is the sum of each atomic mass multiplied by its atom count.
+
+Expected:
+
+* molecular-formula grammar;
+* atomic-mass lookup;
+* direct molar-mass calculation.
+
+23.4 Biology
+
+Idea:
+
+A biological pathway contains stages and regulatory alternatives.
+
+Expected:
+
+* CFG for stage structure;
+* constraints for required ordering;
+* direct numerical operations only where specified.
+
+23.5 Economics
+
+Idea:
+
+An investment scenario contains principal, interest rate and periods.
+Compound value is principal multiplied by one plus the rate raised to the number of periods.
+
+Expected:
+
+* scenario grammar;
+* compound-value predicate;
+* validation of inputs.
+
+23.6 Philosophy
+
+Idea:
+
+An argument contains premises, an inference and a conclusion.
+An objection may challenge a premise or the inference.
+
+Expected:
+
+* argument grammar;
+* optional objection structure;
+* direct logical checks where formally specified;
+* no unsupported claim that ordinary philosophical validity is fully computable.
+
+23.7 Literature
+
+Idea:
+
+A narrative contains a setting, conflict, development, climax and resolution.
+
+Expected:
+
+* narrative CFG;
+* optional subplot recursion with a bound;
+* thematic lexical categories.
+
+23.8 Music
+
+Idea:
+
+A melody contains notes and transformations.
+Transposition adds a fixed number of semitones to each note.
+
+Expected:
+
+* melody grammar;
+* direct transposition operation;
+* range validation.
+
+23.9 Visual art
+
+Idea:
+
+A composition contains a focal element, supporting elements, colour relationships and spatial balance.
+
+Expected:
+
+* compositional grammar;
+* optional coordinate or proportion calculations;
+* qualitative alternatives retained as grammar.
+
+23.10 Computer science
+
+Idea:
+
+An algorithm contains input, initialisation, repeated steps, conditions and output.
+
+Expected:
+
+* algorithm-structure CFG;
+* direct arithmetic and Boolean operations;
+* safe bounded loop representation in the generated model.
+
+23.11 History
+
+Idea:
+
+A historical account contains context, actors, events, causes, consequences and interpretations.
+
+Expected:
+
+* account grammar;
+* timeline validation;
+* direct date comparisons.
+
+23.12 Education
+
+Idea:
+
+A lesson contains objectives, explanation, examples, practice and assessment.
+A score is the number correct divided by the number attempted.
+
+Expected:
+
+* lesson grammar;
+* direct score calculation;
+* division-by-zero handling.
+
+⸻
+
+24. Testing requirements
+
+Use plunit.
+
+24.1 Unit tests
+
+Required test groups:
+
+:- begin_tests(tokenisation).
+:- begin_tests(concept_extraction).
+:- begin_tests(relation_extraction).
+:- begin_tests(operation_extraction).
+:- begin_tests(expression_parsing).
+:- begin_tests(cfg_generation).
+:- begin_tests(dcg_generation).
+:- begin_tests(left_recursion).
+:- begin_tests(grammar_factoring).
+:- begin_tests(operation_codegen).
+:- begin_tests(unit_validation).
+:- begin_tests(ambiguity_reporting).
+:- begin_tests(resource_limits).
+:- begin_tests(export).
+:- begin_tests(repl).
+:- begin_tests(cli).
+
+24.2 Operation extraction tests
+
+Tests must include:
+
+* prose formulas;
+* symbolic formulas;
+* implicit arithmetic;
+* percentages;
+* ratios;
+* averages;
+* comparisons;
+* unit conversions;
+* false positives;
+* ambiguous operations;
+* unsupported operations.
+
+24.3 Grammar tests
+
+Tests must include:
+
+* sequences;
+* alternatives;
+* optional elements;
+* repetition;
+* recursion;
+* feature arguments;
+* state threading;
+* lexical variants;
+* domain partitioning;
+* common-prefix factoring;
+* common-suffix factoring;
+* left-recursion elimination;
+* bounded non-context-free approximations.
+
+24.4 Round-trip tests
+
+Where possible:
+
+model
+→ generated grammar
+→ generated example
+→ parsed tree
+→ equivalent model
+
+24.5 Semantic-equivalence tests
+
+For generated operations, compare results with trusted expected values.
+
+24.6 Negative tests
+
+The test suite must confirm rejection or warning for:
+
+* malformed formulas;
+* unsafe expressions;
+* division by zero;
+* incompatible units;
+* undefined concepts;
+* epsilon cycles;
+* infinite recursion;
+* excessive grammar expansion;
+* unsupported arbitrary Prolog calls;
+* invalid generated identifiers.
+
+24.7 Golden-file tests
+
+Representative generated Prolog and Markdown reports should be tested against reviewed golden files.
+
+Golden-file updates must be explicit and documented.
+
+24.8 Fuzz testing
+
+Generate bounded random idea models and verify that:
+
+* generated modules load;
+* validators terminate;
+* grammar generation respects limits;
+* direct operations do not execute unsafe terms.
+
+⸻
+
+25. Documentation requirements
+
+Required files:
+
+README.md
+PROGRAM_REQUIREMENTS.md
+ARCHITECTURE.md
+IDEA_MODEL.md
+CFG_TRICKS.md
+OPERATION_EXTRACTION.md
+PROLOG_API.md
+REPL.md
+CLI.md
+EXAMPLES.md
+LIMITATIONS.md
+SECURITY.md
+CONTRIBUTING.md
+CHANGELOG.md
+
+25.1 README
+
+The README must include:
+
+* concise purpose;
+* installation;
+* first example;
+* conversion pipeline;
+* distinction between CFG and direct operations;
+* command examples;
+* repository structure;
+* limitations.
+
+25.2 CFG tricks documentation
+
+CFG_TRICKS.md must document each trick with:
+
+* name;
+* purpose;
+* input pattern;
+* output pattern;
+* examples;
+* limitations;
+* tests.
+
+25.3 Limitations
+
+The documentation must state clearly:
+
+* not every academic idea is context-free;
+* the system creates representations and approximations;
+* natural-language understanding may be ambiguous;
+* generated scientific or scholarly models require review;
+* direct calculation does not establish truth of the underlying theory;
+* semantic validators may be domain-limited;
+* generated grammars are not automatically complete theories of their domains.
+
+⸻
+
+26. Security requirements
+
+The system must:
+
+* avoid unrestricted call/1 on generated user terms;
+* avoid shell/1;
+* avoid arbitrary file loading from generated content;
+* avoid writing outside permitted output directories;
+* sanitise generated predicate and module names;
+* use allowlisted arithmetic and logical operators;
+* validate paths;
+* avoid implicit network access;
+* avoid asserting generated clauses into unrelated modules;
+* use temporary modules or files for generated-code validation;
+* report unsafe or unsupported operations without executing them.
+
+No user-provided text may become executable Prolog merely because it resembles Prolog syntax.
+
+⸻
+
+27. Error reporting
+
+Errors and warnings must include:
+
+diagnostic(
+    Severity,
+    Code,
+    Message,
+    SourceLocation,
+    RelatedConcepts,
+    SuggestedAction
+).
+
+Severity:
+
+info.
+warning.
+error.
+fatal.
+
+Example:
+
+diagnostic(
+    warning,
+    bounded_dependency,
+    'The relationship between noun groups and operation groups is not context-free and was bounded to depth 3.',
+    source_line(17),
+    [noun_group, operation_group],
+    'Increase maximum_dependency_depth or provide a direct validation predicate.'
+).
+
+Required diagnostic categories:
+
+* ambiguous statement;
+* unknown concept;
+* unsupported relation;
+* operation extracted;
+* operation left in grammar;
+* approximation introduced;
+* recursion bounded;
+* left recursion removed;
+* grammar explosion risk;
+* unsafe expression;
+* incompatible units;
+* unresolved dependency;
+* generated-code validation failure.
+
+⸻
+
+28. Source traceability
+
+Every generated production and operation must be traceable.
+
+Example:
+
+generated_rule(
+    rule_17,
+    sonata,
+    [exposition, development, recapitulation],
+    [
+        source(sentence_1),
+        trick(sequence_extraction)
+    ]
+).
+
+Example:
+
+generated_operation(
+    operation_4,
+    transpose_pitch,
+    transformation,
+    [
+        source(sentence_4),
+        extraction_phrase("changes every pitch by an integer number of semitones")
+    ]
+).
+
+The explanation command must expose these links.
+
+⸻
+
+29. Human review workflow
+
+The system must produce a review checklist after conversion.
+
+Example:
+
+[ ] Are the main concepts correctly identified?
+[ ] Are alternatives genuinely alternatives?
+[ ] Are sequences in the correct order?
+[ ] Are optional components truly optional?
+[ ] Are mathematical operations extracted correctly?
+[ ] Are units explicit?
+[ ] Are recursion bounds acceptable?
+[ ] Are approximations clearly stated?
+[ ] Are semantic constraints sufficient?
+[ ] Do generated examples make sense?
+
+The user should be able to accept, reject or modify individual inferred rules.
+
+Suggested API:
+
+accept_rule(+IdeaName, +RuleId).
+reject_rule(+IdeaName, +RuleId).
+replace_rule(+IdeaName, +RuleId, +Replacement).
+
+⸻
+
+30. Agent implementation workflow
+
+The GitHub Copilot Agent must implement the project in stages.
+
+At every stage it must:
+
+1. inspect the existing repository;
+2. preserve working behaviour;
+3. implement the requested stage;
+4. add or update tests;
+5. run the relevant tests;
+6. run the full test suite;
+7. fix failures without weakening valid tests;
+8. update documentation;
+9. conduct a self-review;
+10. update PROGRESS.md.
+
+The Agent must not change semantics merely to make a test pass.
+
+⸻
+
+31. Required implementation stages
+
+Stage 1: Repository foundation
+
+Implement:
+
+* project module structure;
+* option handling;
+* diagnostics;
+* basic CLI;
+* basic REPL;
+* plunit setup;
+* documentation skeleton.
+
+Acceptance:
+
+* project loads in SWI-Prolog;
+* help command works;
+* test runner works.
+
+Stage 2: Input and source model
+
+Implement:
+
+* plain-text input;
+* sentence-list input;
+* structured-term input;
+* source locations;
+* tokenisation;
+* normalisation;
+* initial IR terms.
+
+Acceptance:
+
+* inputs produce stable IR;
+* source references are retained.
+
+Stage 3: Concept and relation extraction
+
+Implement:
+
+* category extraction;
+* sequence extraction;
+* alternatives;
+* optionality;
+* repetition;
+* causal and compositional relationships;
+* ambiguities.
+
+Acceptance:
+
+* representative examples from multiple domains pass.
+
+Stage 4: Mathematical-operation extraction
+
+Implement:
+
+* operation lexicon;
+* symbolic expression parser;
+* expression AST;
+* operation classification;
+* directness decision;
+* dependency graph;
+* safe evaluator;
+* operation report.
+
+Acceptance:
+
+* arithmetic and formula examples compute correctly;
+* unsafe expressions are rejected;
+* operations are visibly removed from ordinary CFG generation.
+
+Stage 5: Initial CFG generator
+
+Implement:
+
+* category productions;
+* sequences;
+* alternatives;
+* optional elements;
+* bounded repetition;
+* recursive structures;
+* plain CFG output.
+
+Acceptance:
+
+* generated grammars pass structural validation.
+
+Stage 6: DCG compiler
+
+Implement:
+
+* conversion of IR productions to DCG clauses;
+* parse trees;
+* generation interface;
+* lexical tables;
+* source mapping.
+
+Acceptance:
+
+* generated modules load;
+* parsing and generation tests pass.
+
+Stage 7: Grammar tricks
+
+Implement:
+
+* common-prefix factoring;
+* common-suffix factoring;
+* left-recursion elimination;
+* feature arguments;
+* state threading;
+* construction templates;
+* bounded cross-dependency approximation;
+* semantic filtering.
+
+Acceptance:
+
+* every documented trick has tests and examples.
+
+Stage 8: Grammar-operation integration
+
+Implement:
+
+* grammar-selected operations;
+* direct operation calls;
+* typed interfaces;
+* unit-aware values;
+* validation hooks.
+
+Acceptance:
+
+* hybrid examples work across mathematics, music, economics and science.
+
+Stage 9: Optimisation and resource control
+
+Implement:
+
+* rule simplification;
+* unreachable-rule removal;
+* grammar size estimates;
+* recursion limits;
+* generation bounds;
+* domain partitioning;
+* hotlist extraction.
+
+Acceptance:
+
+* pathological examples terminate with useful diagnostics.
+
+Stage 10: Explanation and traceability
+
+Implement:
+
+* rule explanations;
+* operation explanations;
+* transformation traces;
+* Markdown reports;
+* assumptions and limitation reporting.
+
+Acceptance:
+
+* every generated rule and operation can be traced to source material.
+
+Stage 11: Complete REPL and CLI
+
+Implement all required commands and exit codes.
+
+Acceptance:
+
+* end-to-end scripts run without manual Prolog editing.
+
+Stage 12: Domain showcases
+
+Implement and document at least ten domain examples.
+
+Acceptance:
+
+* each example contains a CFG component;
+* at least six examples contain direct Prolog operations;
+* all examples include tests and reports.
+
+Stage 13: Hardening
+
+Implement:
+
+* security review;
+* fuzz tests;
+* golden tests;
+* performance benchmarks;
+* clean diagnostics;
+* packaging instructions.
+
+Acceptance:
+
+* full test suite passes;
+* no unsafe generated execution is found;
+* documentation matches actual behaviour.
+
+⸻
+
+32. Suggested repository structure
+
+ideacfg/
+├── ideacfg.pl
+├── pack.pl
+├── README.md
+├── PROGRAM_REQUIREMENTS.md
+├── ARCHITECTURE.md
+├── IDEA_MODEL.md
+├── CFG_TRICKS.md
+├── OPERATION_EXTRACTION.md
+├── PROLOG_API.md
+├── REPL.md
+├── CLI.md
+├── EXAMPLES.md
+├── LIMITATIONS.md
+├── SECURITY.md
+├── PROGRESS.md
+├── CHANGELOG.md
+├── prolog/
+│   ├── ideacfg_api.pl
+│   ├── ideacfg_options.pl
+│   ├── ideacfg_diagnostics.pl
+│   ├── ideacfg_input.pl
+│   ├── ideacfg_tokenise.pl
+│   ├── ideacfg_normalise.pl
+│   ├── ideacfg_concepts.pl
+│   ├── ideacfg_relations.pl
+│   ├── ideacfg_ambiguity.pl
+│   ├── ideacfg_operations.pl
+│   ├── ideacfg_expression_dcg.pl
+│   ├── ideacfg_evaluator.pl
+│   ├── ideacfg_units.pl
+│   ├── ideacfg_ir.pl
+│   ├── ideacfg_patterns.pl
+│   ├── ideacfg_cfg.pl
+│   ├── ideacfg_dcg.pl
+│   ├── ideacfg_tricks.pl
+│   ├── ideacfg_factoring.pl
+│   ├── ideacfg_recursion.pl
+│   ├── ideacfg_constraints.pl
+│   ├── ideacfg_validate.pl
+│   ├── ideacfg_optimise.pl
+│   ├── ideacfg_codegen.pl
+│   ├── ideacfg_explain.pl
+│   ├── ideacfg_export.pl
+│   ├── ideacfg_repl.pl
+│   └── ideacfg_cli.pl
+├── test/
+│   ├── test_input.pl
+│   ├── test_concepts.pl
+│   ├── test_relations.pl
+│   ├── test_operations.pl
+│   ├── test_expressions.pl
+│   ├── test_cfg.pl
+│   ├── test_dcg.pl
+│   ├── test_tricks.pl
+│   ├── test_constraints.pl
+│   ├── test_validation.pl
+│   ├── test_codegen.pl
+│   ├── test_repl.pl
+│   ├── test_cli.pl
+│   └── test_security.pl
+├── examples/
+│   ├── mathematics/
+│   ├── physics/
+│   ├── chemistry/
+│   ├── biology/
+│   ├── economics/
+│   ├── philosophy/
+│   ├── literature/
+│   ├── music/
+│   ├── visual_art/
+│   ├── computing/
+│   ├── history/
+│   └── education/
+└── generated/
+
+⸻
+
+33. Coding standards
+
+The implementation must:
+
+* use SWI-Prolog module declarations;
+* use descriptive predicate names;
+* document public predicates with PlDoc;
+* use must_be/2 or equivalent checks at public boundaries;
+* avoid unnecessary global state;
+* use explicit state threading where state is required;
+* isolate side effects;
+* avoid cuts except where proven green and documented;
+* prefer deterministic predicates for analysis and code generation;
+* use DCGs for token and grammar processing;
+* keep transformation stages modular;
+* preserve source references;
+* include tests with every feature.
+
+Generated Prolog should favour readability over overly compressed code.
+
+⸻
+
+34. Acceptance examples
+
+34.1 Geometry
+
+Input:
+
+A rectangle consists of a width and a height.
+Its area is width multiplied by height.
+A description may state its colour.
+
+Expected conceptual grammar:
+
+RECTANGLE_DESCRIPTION
+    → RECTANGLE_DIMENSIONS OPTIONAL_COLOUR
+RECTANGLE_DIMENSIONS
+    → WIDTH HEIGHT
+OPTIONAL_COLOUR
+    → COLOUR
+    | ε
+
+Expected direct predicate:
+
+rectangle_area(Width, Height, Area) :-
+    must_be(number, Width),
+    must_be(number, Height),
+    Area is Width * Height.
+
+The multiplication must not be enumerated as CFG alternatives.
+
+34.2 Music
+
+Input:
+
+A phrase contains a motif followed by a development.
+The development may repeat, invert or transpose the motif.
+Transposition adds a number of semitones to each pitch.
+
+Expected grammar:
+
+PHRASE → MOTIF DEVELOPMENT
+DEVELOPMENT → REPEAT | INVERT | TRANSPOSE
+
+Expected direct operation:
+
+transpose_pitches(Pitches, Semitones, Transposed).
+
+34.3 Essay
+
+Input:
+
+An essay contains an introduction, body and conclusion.
+The body contains one or more arguments.
+Each argument contains a claim and evidence.
+The word count is the number of words in all sections.
+
+Expected grammar:
+
+ESSAY → INTRODUCTION BODY CONCLUSION
+BODY → ARGUMENT MORE_ARGUMENTS
+MORE_ARGUMENTS → ARGUMENT MORE_ARGUMENTS | ε
+ARGUMENT → CLAIM EVIDENCE
+
+Expected direct operation:
+
+essay_word_count(Sections, Count).
+
+34.4 Scientific experiment
+
+Input:
+
+An experiment begins with a hypothesis.
+It then uses a method and records observations.
+The mean result is the sum of measurements divided by their count.
+
+Expected grammar:
+
+EXPERIMENT → HYPOTHESIS METHOD OBSERVATIONS ANALYSIS
+
+Expected direct operation:
+
+measurement_mean(Measurements, Mean).
+
+The predicate must handle an empty list safely.
+
+⸻
+
+35. Completion definition
+
+The first release is complete when:
+
+1. plain text and structured Prolog terms can be converted;
+2. concepts, sequences, alternatives, optionality and repetition are recognised;
+3. common mathematical operations are extracted;
+4. extracted operations are compiled into safe direct Prolog;
+5. remaining structures are converted into CFG and DCG rules;
+6. generated modules can parse and generate examples;
+7. difficult dependencies are bounded, validated or clearly reported;
+8. all generated rules retain source traceability;
+9. the CLI and REPL support complete workflows;
+10. at least ten academic-domain showcases are included;
+11. all tests pass;
+12. security requirements are satisfied;
+13. the documentation accurately describes limitations;
+14. PROGRAM_REQUIREMENTS.md contains the final implemented requirements;
+15. PROGRESS.md records every completed stage.
+
+⸻
+
+36. Final guiding rule
+
+The implementation must repeatedly apply this decision:
+
+representation_for(Element, direct_prolog) :-
+    directly_computable(Element),
+    deterministic_or_semidet(Element),
+    safe_to_execute(Element),
+    !.
+representation_for(Element, cfg) :-
+    compositional_choice(Element),
+    !.
+representation_for(Element, hybrid) :-
+    grammar_selects_operation(Element),
+    !.
+representation_for(Element, constrained_cfg) :-
+    structurally_context_free_approximation(Element),
+    requires_semantic_validation(Element),
+    !.
+representation_for(Element, unresolved) :-
+    report_limitation(Element).
+
+The cut shown above is illustrative pseudocode only. The implementation may replace it with explicit deterministic branching.
+
+The conceptual principle is:
+
+Do not force calculations into a grammar.
+Do not force creative or conceptual alternatives into arithmetic.
+Use CFGs to express possible structures.
+Use Prolog to calculate, constrain, validate and explain them.
+
+The requirements can be adapted to integrate directly with S2A, Starlog, Loop2, PLOP, Detlog or Piglog-style optimisation stages.
