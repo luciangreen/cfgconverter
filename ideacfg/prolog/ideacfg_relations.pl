@@ -111,7 +111,7 @@ detect_causal(Id, Tokens, Src, relation(cause, Cause, Effect, [], Src)) :-
     phrase(causal_pattern(Cause, Effect), Tokens, _),
     atomic_list_concat([Id, '_cause'], _).
 
-% Sequence: "X contains A, B and C" or "X consists of A and B"
+% Sequence: "X contains A, B and C" or "X consists of A and B" or "X has A, B and C"
 sequence_pattern(Members) -->
     skip_tokens(_),
     [contains], !,
@@ -125,6 +125,16 @@ sequence_pattern(Members) -->
 sequence_pattern(Members) -->
     skip_tokens(_),
     [begins, with], !,
+    noun_list(Members),
+    skip_tokens(_).
+sequence_pattern(Members) -->
+    skip_tokens(_),
+    [has], !,
+    noun_list(Members),
+    skip_tokens(_).
+sequence_pattern(Members) -->
+    skip_tokens(_),
+    [have], !,
     noun_list(Members),
     skip_tokens(_).
 
