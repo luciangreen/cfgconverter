@@ -9,8 +9,11 @@
 
 :- use_module(ideacfg_api).
 :- use_module(ideacfg_diagnostics).
+:- use_module(ideacfg_operations).
 :- use_module(library(lists)).
 :- use_module(library(readutil)).
+
+:- op(900, fx, new).
 
 %% ideacfg/0 is det.
 %  Starts the IdeaCFG interactive REPL.
