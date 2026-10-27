@@ -98,3 +98,33 @@ ideacfg/
 - Generated grammars are not complete theories of their domains.
 - Direct calculation does not establish truth of the underlying scholarly theory.
 - See LIMITATIONS.md for full details.
+
+## Feature and Implementation Status
+
+Implemented feature areas include text, sentence-list and structured-term
+inputs; concept, relation and operation extraction; CFG/DCG construction;
+grammar transformations; optimisation; explanation; a REPL; and the
+mathematics, science, arts and humanities examples. The module-level references
+and examples are indexed in [EXAMPLES.md](EXAMPLES.md).
+
+The CLI currently supports `help`, `convert`, and `show-operations`. CLI
+`generate`, `parse`, and `test` are not implemented and return an unsupported
+operation status. Several advertised API entry points remain placeholders;
+their exact status and limitations are listed in [PROLOG_API.md](PROLOG_API.md)
+and [PROGRESS.md](PROGRESS.md).
+
+## Running Tests
+
+Run all 14 plunit test files from the repository root:
+
+```bash
+LC_ALL=C.UTF-8 swipl -q -s ideacfg/test/run_tests.pl -g run_tests -t halt
+```
+
+Run a focused test file, for example:
+
+```bash
+LC_ALL=C.UTF-8 swipl -q -s ideacfg/test/test_cli.pl -g run_tests -t halt
+```
+
+For available commands and supported arguments, see [CLI.md](CLI.md).

@@ -28,14 +28,14 @@ extract_relations(IdeaName, IR, Relations) :-
 extract_relations_from_element(IdeaName, assumption(Id, Text, _, Src), Relations) :-
     atom(Text),
     tokenise_rel(Text, Tokens),
-    (   detect_sequence(Id, Tokens, Src, Seq)
-    ->  Relations = [Seq]
+    (   detect_repetition(Id, Tokens, Src, Rep)
+    ->  Relations = [Rep]
     ;   detect_alternatives(Id, Tokens, Src, Alt)
     ->  Relations = [Alt]
     ;   detect_optional(Id, Tokens, Src, Opt)
     ->  Relations = [Opt]
-    ;   detect_repetition(Id, Tokens, Src, Rep)
-    ->  Relations = [Rep]
+    ;   detect_sequence(Id, Tokens, Src, Seq)
+    ->  Relations = [Seq]
     ;   detect_causal(Id, Tokens, Src, Causal)
     ->  Relations = [Causal]
     ;   Relations = []

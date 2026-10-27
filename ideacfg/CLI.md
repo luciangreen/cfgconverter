@@ -10,42 +10,31 @@ swipl -q -s ideacfg.pl -- COMMAND [OPTIONS]
 
 ### convert
 
+The input file is read as UTF-8 plain text. When `--output` is supplied, the
+generated Prolog module is written to `<PATH>.pl`.
+
 ```bash
 swipl -q -s ideacfg.pl -- convert \
   --name sonata \
-  --input examples/sonata.txt \
+  --input sonata.txt \
   --output generated/sonata
 ```
 
 ### show-operations
 
+Extract and print the recognised operations from a UTF-8 text file.
+
 ```bash
 swipl -q -s ideacfg.pl -- show-operations \
-  --input examples/economics.txt
+  --input investment.txt
 ```
 
-### generate
+### Not yet implemented
 
-```bash
-swipl -q -s ideacfg.pl -- generate \
-  --idea generated/sonata \
-  --count 10
-```
-
-### parse
-
-```bash
-swipl -q -s ideacfg.pl -- parse \
-  --idea generated/sonata \
-  --text "exposition development recapitulation"
-```
-
-### test
-
-```bash
-swipl -q -s ideacfg.pl -- test \
-  --idea generated/sonata
-```
+The `generate`, `parse`, and `test` CLI commands are reserved but not
+implemented. They return exit code `3` (unsupported operation), not success.
+The similarly named Prolog API predicates are also incomplete; see
+[PROLOG_API.md](PROLOG_API.md).
 
 ### help
 

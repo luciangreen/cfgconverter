@@ -47,7 +47,7 @@ write_to_file(Path, Content) :-
     validate_path(Path),
     setup_call_cleanup(
         open(Path, write, Stream, [encoding(utf8)]),
-        write_term(Stream, Content, [quoted(false)]),
+        format(Stream, '~w', [Content]),
         close(Stream)
     ).
 

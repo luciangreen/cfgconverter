@@ -9,32 +9,26 @@
 test(extract_sequence_from_contains) :-
     idea_from_sentences(rel_test1, ['An experiment contains a hypothesis, method and conclusion.'], IR),
     extract_relations(rel_test1, IR, Rels),
-    (   member(sequence(_, Members, _, _), Rels)
-    ->  true
-    ;   true  % acceptable if no sequence found in this IR representation
-    ).
+    member(sequence(_, Members, _, _), Rels),
+    length(Members, N),
+    N >= 2.
 
 test(extract_alternatives_from_may_be) :-
-    tokenise_rel('A proof may be induction or contradiction.', Toks),
-    (   detect_alternatives(test, Toks, source_test, Alt)
-    ->  Alt = alternative(_, Members, [], _),
-        length(Members, N), N >= 2
-    ;   true
-    ).
+    idea_from_sentences(test, ['A proof may be induction or contradiction.'], IR),
+    extract_relations(test, IR, Rels),
+    member(alternative(_, Members, [], _), Rels),
+    length(Members, N),
+    N >= 2.
 
 test(extract_optional_from_may_include) :-
-    tokenise_rel('A report may include appendix.', Toks),
-    (   detect_optional(test, Toks, source_test, Opt)
-    ->  Opt = optional(_, _, [], _)
-    ;   true
-    ).
+    idea_from_sentences(test, ['A report may include appendix.'], IR),
+    extract_relations(test, IR, Rels),
+    member(optional(_, appendix, [], _), Rels).
 
 test(extract_repetition_from_one_or_more) :-
-    tokenise_rel('A body contains one or more arguments.', Toks),
-    (   detect_repetition(test, Toks, source_test, Rep)
-    ->  Rep = repetition(_, _, 1, _, [], _)
-    ;   true
-    ).
+    idea_from_sentences(test, ['A body contains one or more arguments.'], IR),
+    extract_relations(test, IR, Rels),
+    member(repetition(_, arguments, 1, unbounded, [], _), Rels).
 
 test(extract_sequences_list) :-
     idea_from_terms(seq_test, [sequence(body, [intro, main, conclusion], [], src)], IR),
@@ -47,13 +41,5 @@ test(extract_sequence_from_has) :-
     extract_relations(sonata_test, IR, Rels),
     member(sequence(_, Members, _, _), Rels),
     Members = [exposition, development, recapitulation].
-
-tokenise_rel(Text, Tokens) :-
-    atom_string(Text, Str),
-    downcase_atom(Text, Lower),
-    atom_string(Lower, LowerStr),
-    split_string(LowerStr, " \t\n\r", " \t\n\r.,;:!?", Parts),
-    include([P]>>(P \= ""), Parts, NonEmpty),
-    maplist([S, T]>>(atom_string(T, S)), NonEmpty, Tokens).
 
 :- end_tests(relation_extraction).

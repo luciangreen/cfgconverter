@@ -13,7 +13,7 @@
 
 main_or_repl :-
     current_prolog_flag(argv, Args),
-    (   Args = [_Script|CliArgs], CliArgs \= []
-    ->  main(CliArgs)
+    (   Args = [_|_]
+    ->  main(Args)
     ;   ideacfg
     ).
