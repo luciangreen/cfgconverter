@@ -90,11 +90,12 @@
 - Markdown reports
 - Assumptions and limitation reporting (`ideacfg_explain.pl`)
 
-## Stage 11: Complete REPL and CLI ✓
+## Stage 11: REPL and CLI — Partial
 
-- All required REPL commands
-- All exit codes
-- End-to-end CLI scripts
+- REPL command set (see `REPL.md`)
+- CLI help, text conversion and operation display
+- Remaining CLI commands (`generate`, `parse`, `test`) are not implemented
+- CLI exit codes are declared; not all error paths are wired through consistently
 
 ## Stage 12: Domain Showcases ✓
 
@@ -111,9 +112,21 @@
 - History (account)
 - Education (lesson)
 
-## Stage 13: Hardening ✓
+## Stage 13: Hardening — Partial
 
 - Security review (`SECURITY.md`)
-- Test suite
-- Clean diagnostics
+- Test suite (`test/run_tests.pl`)
+- Diagnostics infrastructure
 - Packaging instructions (`pack.pl`)
+- Compiler warnings and diagnostic consistency still need cleanup
+
+## Remaining Work
+
+- Implement CLI generation, parsing and per-idea testing against a persisted
+  model format.
+- Replace placeholder public API behavior for computation, validation,
+  testing and export with execution of generated predicates and real reports.
+- Complete generated operation predicates; arithmetic operations currently
+  produce unresolved results rather than evaluating extracted expressions.
+- Expand natural-language extraction beyond sentence-level assumptions and
+  pattern matching, as described in `LIMITATIONS.md`.

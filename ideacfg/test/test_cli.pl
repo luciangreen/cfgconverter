@@ -21,6 +21,10 @@ test(cli_convert_no_options) :-
     cli_command(convert, [], Code),
     Code = 1.
 
+test(cli_unimplemented_commands_fail_explicitly) :-
+    forall(member(Command, [generate, parse, test]),
+           cli_command(Command, [], 3)).
+
 test(cli_parse_options_name) :-
     parse_options(['--name', 'sonata', '--input', 'test.txt'], Opts),
     memberchk(name(sonata), Opts),
